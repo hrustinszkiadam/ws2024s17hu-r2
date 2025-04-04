@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+.btn {
+	@apply bg-gray-300 border-2 border-black px-4 py-2 cursor-pointer;
+}
+
+.btn:disabled {
+	@apply cursor-not-allowed;
+}
