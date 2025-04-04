@@ -29,12 +29,20 @@ const ManageTeam = () => {
 	}, [getData]);
 
 	const handleSave = async () => {
-		const res = await ax.put(`/teams/${id}`, {
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
+		const res = await ax.put(
+			`/teams/${id}`,
+			{
+				name,
+				location,
+				contactEmail: email,
 			},
-		});
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			}
+		);
 
 		if (res.status !== 200) return;
 		setName(res.data.name);
