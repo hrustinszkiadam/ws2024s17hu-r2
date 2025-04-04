@@ -24,9 +24,9 @@ const Login = ({ setIsLoggedIn }: LoginProps) => {
 	};
 
 	return (
-		<div className='flex items-center justify-center flex-col w-screen h-screen gap-5'>
+		<div className='flex items-center justify-center flex-col w-screen h-screen gap-5 text-2xl'>
 			<h1 className='text-5xl'>Login</h1>
-			<p className='text-2xl'>Login using your token</p>
+			<p>Login using your token</p>
 
 			<input
 				type='text'
