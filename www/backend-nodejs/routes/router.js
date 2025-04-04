@@ -30,4 +30,10 @@ router.post(
 	}
 );
 
+router.get('/stages', (_, res) => {
+	db.query('SELECT * FROM stages', (_, results) => {
+		return res.send(results);
+	});
+});
+
 export default router;
