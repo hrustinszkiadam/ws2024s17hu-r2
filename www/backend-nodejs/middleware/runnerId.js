@@ -17,8 +17,8 @@ const runnerId = (req, res, next) => {
 	}
 
 	db.query(
-		'SELECT * FROM runners WHERE id = ?',
-		Number(runnerId),
+		'SELECT * FROM runners WHERE id = ? AND teamId = ?',
+		[Number(runnerId), req.teamId],
 		(_, results) => {
 			if (!results.length) {
 				return res.status(404).send({

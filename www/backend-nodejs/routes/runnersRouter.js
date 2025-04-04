@@ -7,8 +7,8 @@ const runnersRouter = Router();
 
 runnersRouter.get('/:runnerId', runnerId, (req, res) => {
 	db.query(
-		'SELECT * FROM runners WHERE id = ?',
-		[req.runnerId],
+		'SELECT * FROM runners WHERE id = ? AND teamId = ?',
+		[req.runnerId, req.teamId],
 		(_, results) => {
 			return res.send(results[0]);
 		}
@@ -16,6 +16,7 @@ runnersRouter.get('/:runnerId', runnerId, (req, res) => {
 });
 
 runnersRouter.post('/', adminGuard, (req, res) => {});
+
 runnersRouter.put('/:runnerId', runnerId, adminGuard, (req, res) => {});
 runnersRouter.delete('/:runnerId', runnerId, adminGuard, (req, res) => {});
 
