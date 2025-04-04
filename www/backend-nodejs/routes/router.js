@@ -2,6 +2,7 @@ import { Router } from 'express';
 import db from '../db.js';
 import teamId from '../middleware/teamId.js';
 import teamsRouter from './teamsRouter.js';
+import runnersRouter from './runnersRouter.js';
 
 const router = Router();
 
@@ -39,5 +40,6 @@ router.get('/stages', (_, res) => {
 });
 
 router.use('/teams/:teamId', teamId, teamsRouter);
+router.use('/teams/:teamId/runners', teamId, runnersRouter);
 
 export default router;
