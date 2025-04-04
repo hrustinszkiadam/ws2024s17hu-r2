@@ -11,7 +11,7 @@ const adminGuard = (req, res, next) => {
 		if (!results.length) return res.sendStatus(403);
 
 		const user = results[0];
-		if (!user.isAdmin) return res.sendStatus(403);
+		if (!user.isAdmin || user.teamId !== req.teamId) return res.sendStatus(403);
 		req.user = user;
 		next();
 	});
