@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import db from '../db.js';
+import teamId from '../middleware/teamId.js';
+import teamsRouter from './teamsRouter.js';
 
 const router = Router();
 
@@ -35,5 +37,7 @@ router.get('/stages', (_, res) => {
 		return res.send(results);
 	});
 });
+
+router.use('/teams/:teamId', teamId, teamsRouter);
 
 export default router;
