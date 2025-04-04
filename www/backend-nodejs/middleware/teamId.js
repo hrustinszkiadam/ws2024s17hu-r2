@@ -9,7 +9,7 @@ const teamId = (req, res, next) => {
 		});
 	}
 
-	if (typeof Number(teamId) !== 'number') {
+	if (Number(teamId) % 1 !== 0) {
 		return res.status(400).send({
 			status: 'error',
 			message: 'TeamId must be of type integer',
