@@ -2,6 +2,7 @@ import { Router } from 'express';
 import adminGuard from '../middleware/adminGuard.js';
 import runnerId from '../middleware/runnerId.js';
 import db from '../db.js';
+import getNow from '../utils/getNow.js';
 
 const runnersRouter = Router();
 
@@ -23,10 +24,7 @@ runnersRouter.post('/', adminGuard, (req, res) => {
 	const { firstName, lastName, speed } = req.body;
 	if (!firstName || !lastName || !speed) return res.sendStatus(400);
 
-	const now = new Date(Date.now())
-		.toISOString()
-		.split('.')[0]
-		.replace('T', ' ');
+	const now = getNow();
 
 	const data = {
 		firstName,
@@ -44,7 +42,6 @@ runnersRouter.post('/', adminGuard, (req, res) => {
 		for (let i = 0; i < 9; i++) {
 			token += results.insertId.toString();
 		}
-		console.log(token);
 
 		db.query(
 			'UPDATE runners SET ? WHERE id = ?',
@@ -58,7 +55,30 @@ runnersRouter.post('/', adminGuard, (req, res) => {
 	});
 });
 
-runnersRouter.put('/:runnerId', runnerId, adminGuard, (req, res) => {});
-runnersRouter.delete('/:runnerId', runnerId, adminGuard, (req, res) => {});
+runnersRouter.put('/:runnerId', runnerId, adminGuard, (req, res) => {
+	const { firstName, lastName, speed } = req.body;
+	if (!firstName || !lastName || !speed) return res.sendStatus(400);
+
+	const data = {
+		updated_at: getNow(),
+		firstName,
+		lastName,
+		speed,
+	};
+	db.query('UPDATE runners SET ? WHERE id = ?', [data, req.runnerId], () => {
+		return res.redirect(`/api/v1/teams/${req.teamId}/runners/${req.runnerId}`);
+	});
+});
+
+runnersRouter.delete('/:runnerId', runnerId, adminGuard, (req, res) => {
+	db.query('DELETE FROM runners WHERE id = ? AND teamId = ?', [
+		req.runnerId,
+		req.teamId,
+	]);
+
+	return res.send({
+		success: true,
+	});
+});
 
 export default runnersRouter;
