@@ -24,4 +24,13 @@ teamsRouter.put('/', adminGuard, (req, res) => {
 	return res.redirect(`/api/v1/teams/${req.teamId}`);
 });
 
+teamsRouter.delete('/', adminGuard, (req, res) => {
+	db.query('DELETE FROM runners WHERE teamId = ?', [req.teamId]);
+	db.query('DELETE FROM teams WHERE id = ?', [req.teamId]);
+
+	return res.send({
+		success: true,
+	});
+});
+
 export default teamsRouter;
