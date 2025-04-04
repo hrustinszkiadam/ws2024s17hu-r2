@@ -31,7 +31,7 @@ const Login = ({ setIsLoggedIn }: LoginProps) => {
 			<input
 				type='text'
 				placeholder='Token'
-				className='border-2 border-black py-2 px-4 w-[20%] my-3'
+				className='input w-[20%] my-3'
 				value={token}
 				onChange={(e) => setToken(e.target.value)}
 			/>
